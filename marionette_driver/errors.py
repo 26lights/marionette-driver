@@ -3,6 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 from __future__ import absolute_import
+from six import text_type
 
 import traceback
 
@@ -29,14 +30,12 @@ class MarionetteException(Exception):
         """
         self.cause = cause
         self.stacktrace = stacktrace
+        self.message = message
 
         super(MarionetteException, self).__init__(message)
 
     def __str__(self):
-        return unicode(self).encode("utf-8")
-
-    def __unicode__(self):
-        msg = unicode(self.message)
+        msg = text_type(self.message)
         tb = None
 
         if self.cause:

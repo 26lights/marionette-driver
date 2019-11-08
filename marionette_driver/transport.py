@@ -151,7 +151,7 @@ class TcpTransport(object):
         while self.socket_timeout is None or (time.time() - now < self.socket_timeout):
             try:
                 chunk = self._sock.recv(bytes_to_recv)
-                data += chunk
+                data += chunk.decode('utf-8')
             except socket.timeout:
                 pass
             else:
@@ -163,7 +163,7 @@ class TcpTransport(object):
                 length = data[0:sep]
                 remaining = data[sep + 1:]
 
-                if len(remaining) == int(length):
+                if len(remaining.encode('utf-8')) == int(length):
                     if unmarshal:
                         msg = self._unmarshal(remaining)
                         self.last_id = msg.id
@@ -239,7 +239,7 @@ class TcpTransport(object):
                 self.expected_response = obj
         else:
             data = json.dumps(obj)
-        payload = "{0}:{1}".format(len(data), data)
+        payload = "{0}:{1}".format(len(data), data).encode("utf-8")
 
         totalsent = 0
         while totalsent < len(payload):

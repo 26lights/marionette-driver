@@ -1490,7 +1490,7 @@ class Marionette(object):
         elif type(args) == HTMLElement:
             wrapped = {WEB_ELEMENT_KEY: args.id,
                        CHROME_ELEMENT_KEY: args.id}
-        elif (isinstance(args, bool) or isinstance(args, basestring) or
+        elif (isinstance(args, bool) or isinstance(args, str) or
               isinstance(args, int) or isinstance(args, float) or args is None):
             wrapped = args
         return wrapped
